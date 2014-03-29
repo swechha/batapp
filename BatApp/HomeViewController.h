@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 
-@interface HomeViewController : UICollectionViewController
+@interface HomeViewController : UICollectionViewController <UICollectionViewDelegate, UICollectionViewDataSource, CLLocationManagerDelegate>
 
 @end

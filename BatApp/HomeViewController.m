@@ -7,9 +7,16 @@
 //
 
 #import "HomeViewController.h"
+#import "WeatherOverviewCell.h"
+#import "Weather.h"
+#import "WeatherKit.h"
+#import <LiveFrost.h>
 
 @interface HomeViewController ()
-
+@property LFGlassView *glassView;
+@property UIButton *addButton;
+@property UIButton *settingsButton;
+@property NSMutableArray *weatherData;
 @end
 
 @implementation HomeViewController
@@ -17,9 +24,13 @@
 - (id)init {
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.minimumLineSpacing = 20;
+    flowLayout.footerReferenceSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, 40);
+    flowLayout.headerReferenceSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, 40);
+    
     self = [super initWithCollectionViewLayout:flowLayout];
     if (self) {
-        //custom init
+        [self.collectionView registerClass:[WeatherOverviewCell class] forCellWithReuseIdentifier:@"WeatherCell"];
+        //initialize weatherData with current location
     }
     
     return self;
@@ -30,13 +41,113 @@
     [super viewDidLoad];
     UIImageView *backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
     [self.collectionView setBackgroundView:backgroundView];
-	// Do any additional setup after loading the view.
+    _glassView = [[LFGlassView alloc] initWithFrame:self.collectionView.frame];
+    _glassView.blurRadius = 0.8;
+    _glassView.liveBlurring = YES;
+    [backgroundView addSubview:self.glassView];
+    
+    
+    //HARDCODED STUFF -- NEED TO REMOVE IT
+    //____________________________________
+    [[WeatherKit sharedInstance] weatherAtLocation:[[CLLocation alloc] initWithLatitude:35 longitude:139] success:^(NSDictionary *result) {
+        Weather *weather = [[Weather alloc] initWithDictionary:result];
+        self.weatherData = [[NSMutableArray alloc]initWithObjects:weather, nil];
+        [self.collectionView reloadData];
+    } faliure:^(NSError *error) {
+        NSLog(@"Whaaaaaaaa");
+    }];
+    [[WeatherKit sharedInstance] weatherAtLocation:[[CLLocation alloc] initWithLatitude:50 longitude:28] success:^(NSDictionary *result) {
+        Weather *weather = [[Weather alloc] initWithDictionary:result];
+        [self.weatherData addObject:weather];
+        [self.collectionView reloadData];
+    } faliure:^(NSError *error) {
+        NSLog(@"Whaaaaaaaa");
+    }];
+    
+    [self addTopButtons];
+}
+
+
+//For adding "+" and "settings" icon on top of the collection view
+- (void)addTopButtons
+{
+    _addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    [self.addButton.titleLabel setFont:[UIFont fontWithName:@"Avenir" size:30]];
+    [self.addButton setTitle:@"+" forState:UIControlStateNormal];
+    self.addButton.center = CGPointMake(25, 25);
+    
+    [self.collectionView addSubview:self.addButton];
+}
+
+- (void)startUpdatingCurrentLocation
+{
+    CLLocationManager *locationManager = [[CLLocationManager alloc] init];
+    locationManager.delegate = self;
+    locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
+    locationManager.distanceFilter = kCLDistanceFilterNone;
+    
+    [locationManager startUpdatingLocation];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - UICollectionViewDelegate methods
+
+- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return CGSizeMake(self.view.frame.size.width-20, (self.view.frame.size.height-80)/2);
+}
+
+#pragma mark - UICollectionViewDataSource methods
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return [self.weatherData count];
+}
+
+- (UICollectionViewCell*)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    WeatherOverviewCell *weatherCell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"WeatherCell" forIndexPath:indexPath];
+    weatherCell.weatherObject = [self.weatherData objectAtIndex:indexPath.row];
+    return weatherCell;
+}
+
+#pragma mark CLLocationManagerDelegate methods
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    CLLocation *currentLocation = [locations lastObject];
+    if (!_weatherData) {
+        [[WeatherKit sharedInstance] weatherAtLocation:currentLocation success:^(NSDictionary *result) {
+            Weather *weather = [[Weather alloc] initWithDictionary:result];
+            self.weatherData = [[NSMutableArray alloc]initWithObjects:weather, nil];
+            [self.collectionView reloadData];
+        } faliure:^(NSError *error) {
+            NSLog(@"Whaaaaaaaa");
+        }];
+    } else {
+        [[WeatherKit sharedInstance] weatherAtLocation:[[CLLocation alloc] initWithLatitude:35 longitude:139] success:^(NSDictionary *result) {
+            Weather *weather = [[Weather alloc] initWithDictionary:result];
+            self.weatherData[0] = weather;
+            [self.collectionView reloadData];
+        } faliure:^(NSError *error) {
+            NSLog(@"Whaaaaaaaa");
+        }];
+    }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    NSLog(@"Location Manager failed");
+    //Display a message for "Cannot get the current location
 }
 
 @end
