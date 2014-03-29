@@ -7,7 +7,6 @@
 //
 
 #import "WeatherOverviewCell.h"
-#import <LiveFrost/LiveFrost.h>
 
 @implementation WeatherOverviewCell
 

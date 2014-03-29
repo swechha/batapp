@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CoreLocation/CoreLocation.h>
 
 @interface Weather : NSObject
 
@@ -25,7 +24,6 @@
 //Overall weather using codes on OpenWeatherMap
 @property NSArray *weather;
 
-- (instancetype)initWithLocation:(CLLocation*)location;
 - (instancetype)initWithDictionary:(NSDictionary*)response;
 
 @end

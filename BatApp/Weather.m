@@ -8,7 +8,6 @@
 
 #import "Weather.h"
 #import <OpenWeatherMapAPI/OWMWeatherAPI.h>
-#import "WeatherKit.h"
 #import <math.h>
 
 @interface Weather()
@@ -33,20 +32,6 @@
     if (self = [super init]) {
         _temperature = roundf([response[@"main"][@"temp"] floatValue]);
         _cityName = response[@"name"];
-    }
-    return self;
-}
-
-- (instancetype)initWithLocation:(CLLocation*)location
-{
-    if (self = [self init]) {
-        [[WeatherKit sharedInstance] weatherAtLocation:location success:^(NSDictionary *result){
-            _response = [NSDictionary dictionaryWithDictionary:result];
-            _temperature = [self.response[@"main"][@"temp"] floatValue];
-            _cityName = self.response[@"name"];
-        }faliure:^(NSError *error){
-            NSLog(@"Failed to get current weather :(");
-        }];
     }
     return self;
 }
