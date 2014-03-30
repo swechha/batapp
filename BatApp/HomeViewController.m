@@ -30,6 +30,7 @@
     self = [super initWithCollectionViewLayout:flowLayout];
     if (self) {
         [self.collectionView registerClass:[WeatherOverviewCell class] forCellWithReuseIdentifier:@"WeatherCell"];
+        [self startUpdatingCurrentLocation];
         //initialize weatherData with current location
     }
     
@@ -48,7 +49,7 @@
     
     
     //HARDCODED STUFF -- NEED TO REMOVE IT
-    //____________________________________
+    //__________________________________________________________________________________________
     [[WeatherKit sharedInstance] weatherAtLocation:[[CLLocation alloc] initWithLatitude:35 longitude:139] success:^(NSDictionary *result) {
         Weather *weather = [[Weather alloc] initWithDictionary:result];
         self.weatherData = [[NSMutableArray alloc]initWithObjects:weather, nil];
@@ -63,6 +64,7 @@
     } faliure:^(NSError *error) {
         NSLog(@"Whaaaaaaaa");
     }];
+    //___________________________________________________________________________________________
     
     [self addTopButtons];
 }
@@ -75,6 +77,7 @@
     [self.addButton.titleLabel setFont:[UIFont fontWithName:@"Avenir" size:30]];
     [self.addButton setTitle:@"+" forState:UIControlStateNormal];
     self.addButton.center = CGPointMake(25, 25);
+    [self.addButton targetForAction:@selector(addNewCity) withSender:self];
     
     [self.collectionView addSubview:self.addButton];
 }
@@ -89,6 +92,12 @@
     [locationManager startUpdatingLocation];
 }
 
+//Called on clicking on + button
+- (void)addNewCity
+{
+    
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -96,14 +105,15 @@
 
 #pragma mark - UICollectionViewDelegate methods
 
-- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(self.view.frame.size.width-20, (self.view.frame.size.height-80)/2);
+    NSLog(@"%lf %lf",self.view.frame.size.width-20, (self.view.frame.size.height-80)/2);
+    return CGSizeMake(300, 244);
 }
 
 #pragma mark - UICollectionViewDataSource methods

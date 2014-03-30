@@ -8,9 +8,11 @@
 
 #import "WeatherKit.h"
 #import <OWMWeatherAPI.h>
+#import <AFNetworking.h>
 
 @interface WeatherKit()
 @property OWMWeatherAPI* weatherAPI;
+@property NSURL *imageBaseURL;
 @end
 
 @implementation WeatherKit
@@ -30,6 +32,7 @@
     self = [super init];
     if (self) {
         _weatherAPI = [[OWMWeatherAPI alloc] initWithAPIKey:@"39a01302bc8f9ec64bbb6932006ace3b"];
+        _imageBaseURL = [[NSURL alloc] initWithString:@"http://openweathermap.org/img/w"];
     }
     return self;
 }
@@ -43,6 +46,29 @@
             failure(error);
         }
     }];
+}
+
+- (void)getForecastAtLocation:(CLLocation*)location success:(void (^)(NSDictionary* result))success faliure:(void (^)(NSError *error))failure
+{
+    [self.weatherAPI forecastWeatherByCoordinate:location.coordinate withCallback:^(NSError *error, NSDictionary *result) {
+        if (!error) {
+            //get the forecast
+            success([result copy]);
+        } else {
+            failure(error);
+        }
+    }];
+}
+
+- (void)weatherIconWithId:(NSString *)iconId success:(void (^)(UIImage* icon))sucess failure:(void (^)(NSError* error))failure
+{
+    NSURL *imageURL = [self.imageBaseURL URLByAppendingPathComponent:iconId];
+    UIImage *iconImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageURL]];
+    if (iconImage) {
+        sucess([iconImage copy]);
+    } else {
+        failure([NSError errorWithDomain:@"Faield to fetch the image" code:-1 userInfo:nil]);
+    }
 }
 
 @end

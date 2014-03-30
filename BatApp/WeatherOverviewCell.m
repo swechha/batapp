@@ -7,6 +7,7 @@
 //
 
 #import "WeatherOverviewCell.h"
+#import "WeatherKit.h"
 
 @implementation WeatherOverviewCell
 
@@ -23,31 +24,56 @@
 {
     _weatherObject = weatherObject;
     
-    //Temperature Label
-    UILabel *temperatureLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.contentView.frame.size.width/2, self.contentView.frame.size.height/2)];
-    temperatureLabel.font = [UIFont fontWithName:@"Avenir" size:40];
-    temperatureLabel.textColor = [UIColor whiteColor];
-    temperatureLabel.center = CGPointMake(20+self.contentView.frame.size.width/4, 3*self.contentView.frame.size.height/4);
-    temperatureLabel.text = [NSString stringWithFormat:@"%ld °C",(long)self.weatherObject.temperature];
-    
     //City Name Label
-    UILabel *cityLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, self.contentView.frame.size.width, self.contentView.frame.size.height/2)];
+    UILabel *cityLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, self.contentView.frame.size.width, 40)];
     cityLabel.font = [UIFont fontWithName:@"Avenir" size:32];
     cityLabel.textColor = [UIColor whiteColor];
     cityLabel.text = self.weatherObject.cityName;
     
+    //Humidity Label
+    UILabel *humidityLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 60, self.contentView.frame.size.width, 20)];
+    humidityLabel.font = [UIFont fontWithName:@"Avenir" size:18];
+    humidityLabel.textColor = [UIColor whiteColor];
+    humidityLabel.text = [NSString stringWithFormat:@"%ld %% Humidity", weatherObject.humidity];
+    
+    //Max/Min temperature labels
+    UILabel *maxTempLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 90, self.contentView.frame.size.width, 15)];
+    UILabel *minTempLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 110, self.contentView.frame.size.width, 15)];
+    maxTempLabel.font = [UIFont fontWithName:@"Avenir" size:14];
+    maxTempLabel.textColor = [UIColor whiteColor];
+    minTempLabel.font = [UIFont fontWithName:@"Avenir" size:14];
+    minTempLabel.textColor = [UIColor whiteColor];
+    maxTempLabel.text = [NSString stringWithFormat:@"Max: %ld °C", weatherObject.temperatureMax];
+    minTempLabel.text = [NSString stringWithFormat:@"Min: %ld °C", weatherObject.temperatureMin];
+    
+    //Weather description
+    UILabel *weatherDecription = [[UILabel alloc] initWithFrame:CGRectMake(10, 140, self.contentView.frame.size.width, 30)];
+    weatherDecription.font = [UIFont fontWithName:@"Avenir" size:22];
+    weatherDecription.textColor = [UIColor whiteColor];
+    weatherDecription.text = weatherObject.weatherDescription;
+    
+    //Temperature Label
+    UILabel *temperatureLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 180, self.contentView.frame.size.width/2, 50)];
+    temperatureLabel.font = [UIFont fontWithName:@"Avenir" size:48];
+    temperatureLabel.textColor = [UIColor whiteColor];
+    temperatureLabel.text = [NSString stringWithFormat:@"%ld °C",(long)self.weatherObject.temperature];
+    
+    //Weather icon
+    [[WeatherKit sharedInstance] weatherIconWithId:weatherObject.iconID success:^(UIImage *icon) {
+        UIImageView *weatherIconView = [[UIImageView alloc] initWithImage:icon];
+        weatherIconView.center = CGPointMake(3*self.contentView.frame.size.width/4, 205);
+        [self.contentView addSubview:weatherIconView];
+    } failure:^(NSError *error) {
+        NSLog(@"Failed to get the icon");
+    }];
+    
     //Adding subviews
-    [self.contentView addSubview:temperatureLabel];
     [self.contentView addSubview:cityLabel];
+    [self.contentView addSubview:humidityLabel];
+    [self.contentView addSubview:temperatureLabel];
+    [self.contentView addSubview:weatherDecription];
+    [self.contentView addSubview:maxTempLabel];
+    [self.contentView addSubview:minTempLabel];
 }
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 @end

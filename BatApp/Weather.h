@@ -20,9 +20,11 @@
 @property NSInteger temperatureMin;
 @property NSInteger temperatureMax;
 //Humidity in %
-@property CGFloat humidity;
-//Overall weather using codes on OpenWeatherMap
-@property NSArray *weather;
+@property NSInteger humidity;
+//Overall weather description
+@property NSString *weatherDescription;
+//Icon ID for the current weather
+@property NSString *iconID;
 
 - (instancetype)initWithDictionary:(NSDictionary*)response;
 
