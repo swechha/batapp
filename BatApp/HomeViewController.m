@@ -10,6 +10,7 @@
 #import "WeatherOverviewCell.h"
 #import "Weather.h"
 #import "WeatherKit.h"
+#import "DetailViewController.h"
 #import <LiveFrost.h>
 
 @interface HomeViewController ()
@@ -42,6 +43,8 @@
     [super viewDidLoad];
     UIImageView *backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
     [self.collectionView setBackgroundView:backgroundView];
+    
+    //Adding blur to the background
     _glassView = [[LFGlassView alloc] initWithFrame:self.collectionView.frame];
     _glassView.blurRadius = 0.8;
     _glassView.liveBlurring = YES;
@@ -49,6 +52,7 @@
     
     
     //HARDCODED STUFF -- NEED TO REMOVE IT
+    //ALSO USE WEAK SELF WHEN YOU REWRITE THIS CODE FOR "+" BUTTON
     //__________________________________________________________________________________________
     [[WeatherKit sharedInstance] weatherAtLocation:[[CLLocation alloc] initWithLatitude:35 longitude:139] success:^(NSDictionary *result) {
         Weather *weather = [[Weather alloc] initWithDictionary:result];
@@ -71,6 +75,7 @@
 
 
 //For adding "+" and "settings" icon on top of the collection view
+//Size of button: 30x30, center of button: (25,25), Font size: 30
 - (void)addTopButtons
 {
     _addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
@@ -107,7 +112,11 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    Weather *selectedWeather = [self.weatherData objectAtIndex:indexPath.row];
+    //Create and push detailViewController
+    CLLocation *thisLocation = [[CLLocation alloc] initWithLatitude:selectedWeather.latitude longitude:selectedWeather.longitude];
+    DetailViewController *detailViewController = [[DetailViewController alloc] initWithLocation:thisLocation];
+    [self presentViewController:detailViewController animated:NO completion:^{}];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath

@@ -48,9 +48,9 @@
     }];
 }
 
-- (void)getForecastAtLocation:(CLLocation*)location success:(void (^)(NSDictionary* result))success faliure:(void (^)(NSError *error))failure
+- (void)forecastAtLocation:(CLLocation*)location success:(void (^)(NSDictionary* result))success faliure:(void (^)(NSError *error))failure
 {
-    [self.weatherAPI forecastWeatherByCoordinate:location.coordinate withCallback:^(NSError *error, NSDictionary *result) {
+    [self.weatherAPI dailyForecastWeatherByCoordinate:location.coordinate withCount:14 andCallback:^(NSError *error, NSDictionary *result) {
         if (!error) {
             //get the forecast
             success([result copy]);

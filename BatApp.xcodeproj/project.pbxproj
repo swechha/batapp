@@ -19,6 +19,9 @@
 		BF0A724A18E3495600853711 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF0A723218E3495600853711 /* UIKit.framework */; };
 		BF0A725218E3495600853711 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BF0A725018E3495600853711 /* InfoPlist.strings */; };
 		BF0A725418E3495600853711 /* BatAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0A725318E3495600853711 /* BatAppTests.m */; };
+		BF28ACA118EB245F000EE9B3 /* ForecastWeatherViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF28ACA018EB245F000EE9B3 /* ForecastWeatherViewCell.m */; };
+		BF28ACA418EB2C1F000EE9B3 /* ForecastWeather.m in Sources */ = {isa = PBXBuildFile; fileRef = BF28ACA318EB2C1F000EE9B3 /* ForecastWeather.m */; };
+		BF49DD6518E9D6E700BC8A84 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF49DD6418E9D6E700BC8A84 /* DetailViewController.m */; };
 		BF6B16B718E571C60063E9D5 /* WeatherOverviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6B16B618E571C60063E9D5 /* WeatherOverviewCell.m */; };
 		BF6B16BA18E5770A0063E9D5 /* Weather.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6B16B918E5770A0063E9D5 /* Weather.m */; };
 		BF6B16BC18E57EEC0063E9D5 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF6B16BB18E57EEC0063E9D5 /* CoreLocation.framework */; };
@@ -58,6 +61,12 @@
 		BF0A724F18E3495600853711 /* BatAppTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BatAppTests-Info.plist"; sourceTree = "<group>"; };
 		BF0A725118E3495600853711 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BF0A725318E3495600853711 /* BatAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BatAppTests.m; sourceTree = "<group>"; };
+		BF28AC9F18EB245F000EE9B3 /* ForecastWeatherViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForecastWeatherViewCell.h; sourceTree = "<group>"; };
+		BF28ACA018EB245F000EE9B3 /* ForecastWeatherViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForecastWeatherViewCell.m; sourceTree = "<group>"; };
+		BF28ACA218EB2C1F000EE9B3 /* ForecastWeather.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForecastWeather.h; sourceTree = "<group>"; };
+		BF28ACA318EB2C1F000EE9B3 /* ForecastWeather.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForecastWeather.m; sourceTree = "<group>"; };
+		BF49DD6318E9D6E700BC8A84 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		BF49DD6418E9D6E700BC8A84 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		BF6B16B518E571C60063E9D5 /* WeatherOverviewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeatherOverviewCell.h; sourceTree = "<group>"; };
 		BF6B16B618E571C60063E9D5 /* WeatherOverviewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeatherOverviewCell.m; sourceTree = "<group>"; };
 		BF6B16B818E5770A0063E9D5 /* Weather.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Weather.h; sourceTree = "<group>"; };
@@ -139,6 +148,10 @@
 				BFD91D9F18E4693000896207 /* HomeViewController.m */,
 				BF6B16B518E571C60063E9D5 /* WeatherOverviewCell.h */,
 				BF6B16B618E571C60063E9D5 /* WeatherOverviewCell.m */,
+				BF49DD6318E9D6E700BC8A84 /* DetailViewController.h */,
+				BF49DD6418E9D6E700BC8A84 /* DetailViewController.m */,
+				BF28AC9F18EB245F000EE9B3 /* ForecastWeatherViewCell.h */,
+				BF28ACA018EB245F000EE9B3 /* ForecastWeatherViewCell.m */,
 				BF75EF2B18E6F9CD00F703DB /* WeatherKit.h */,
 				BF75EF2C18E6F9CD00F703DB /* WeatherKit.m */,
 				BF0A724018E3495600853711 /* Images.xcassets */,
@@ -183,6 +196,8 @@
 			children = (
 				BF6B16B818E5770A0063E9D5 /* Weather.h */,
 				BF6B16B918E5770A0063E9D5 /* Weather.m */,
+				BF28ACA218EB2C1F000EE9B3 /* ForecastWeather.h */,
+				BF28ACA318EB2C1F000EE9B3 /* ForecastWeather.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -333,7 +348,10 @@
 				BF0A723B18E3495600853711 /* main.m in Sources */,
 				BFD91DA018E4693000896207 /* HomeViewController.m in Sources */,
 				BF6B16B718E571C60063E9D5 /* WeatherOverviewCell.m in Sources */,
+				BF28ACA418EB2C1F000EE9B3 /* ForecastWeather.m in Sources */,
 				BF6B16BA18E5770A0063E9D5 /* Weather.m in Sources */,
+				BF28ACA118EB245F000EE9B3 /* ForecastWeatherViewCell.m in Sources */,
+				BF49DD6518E9D6E700BC8A84 /* DetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
