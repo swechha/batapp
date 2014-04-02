@@ -7,12 +7,12 @@
 //
 
 #import "Weather.h"
+#import "WeatherKit.h"
 #import <OpenWeatherMapAPI/OWMWeatherAPI.h>
 #import <math.h>
 
 @interface Weather()
 
-@property (nonatomic, strong)NSDictionary *response;
 @property OWMWeatherAPI *weatherAPI;
 
 @end

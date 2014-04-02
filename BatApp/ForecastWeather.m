@@ -14,7 +14,14 @@
 {
     self = [super init];
     if (self) {
+        self.maxTemp = [dictionary[@"temp"][@"max"] integerValue];
+        self.minTemp = [dictionary[@"temp"][@"min"] integerValue];
+        self.weatherDescription = dictionary[@"weather"][0][@"description"];
         
+        NSDate *date = dictionary[@"dt"];
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"dd-mm-yyyy"];
+        self.dateString = [formatter stringFromDate:date];
     }
     return self;
 }

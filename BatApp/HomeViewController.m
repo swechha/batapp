@@ -30,7 +30,6 @@
     
     self = [super initWithCollectionViewLayout:flowLayout];
     if (self) {
-        [self.collectionView registerClass:[WeatherOverviewCell class] forCellWithReuseIdentifier:@"WeatherCell"];
         [self startUpdatingCurrentLocation];
         //initialize weatherData with current location
     }
@@ -41,11 +40,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.collectionView registerClass:[WeatherOverviewCell class] forCellWithReuseIdentifier:@"WeatherCell"];
+    
     UIImageView *backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
     [self.collectionView setBackgroundView:backgroundView];
     
     //Adding blur to the background
-    _glassView = [[LFGlassView alloc] initWithFrame:self.collectionView.frame];
+    _glassView = [[LFGlassView alloc] initWithFrame:backgroundView.bounds];
     _glassView.blurRadius = 0.8;
     _glassView.liveBlurring = YES;
     [backgroundView addSubview:self.glassView];
@@ -116,7 +117,9 @@
     //Create and push detailViewController
     CLLocation *thisLocation = [[CLLocation alloc] initWithLatitude:selectedWeather.latitude longitude:selectedWeather.longitude];
     DetailViewController *detailViewController = [[DetailViewController alloc] initWithLocation:thisLocation];
-    [self presentViewController:detailViewController animated:NO completion:^{}];
+    detailViewController.cityName = selectedWeather.cityName;
+    
+    [self.navigationController pushViewController:detailViewController animated:NO];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath

@@ -41,7 +41,7 @@
 {
     [self.weatherAPI currentWeatherByCoordinate:location.coordinate withCallback:^(NSError *error, NSDictionary *result) {
         if (!error) {
-            success([result copy]);
+            success(result);
         } else {
             failure(error);
         }
@@ -53,7 +53,7 @@
     [self.weatherAPI dailyForecastWeatherByCoordinate:location.coordinate withCount:14 andCallback:^(NSError *error, NSDictionary *result) {
         if (!error) {
             //get the forecast
-            success([result copy]);
+            success(result);
         } else {
             failure(error);
         }
@@ -65,10 +65,19 @@
     NSURL *imageURL = [self.imageBaseURL URLByAppendingPathComponent:iconId];
     UIImage *iconImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageURL]];
     if (iconImage) {
-        sucess([iconImage copy]);
+        sucess(iconImage);
     } else {
         failure([NSError errorWithDomain:@"Faield to fetch the image" code:-1 userInfo:nil]);
     }
+}
+
+//Returns image view with the weather icon
+- (UIImageView *)weatherIconWithId:(NSString *)iconId
+{
+    UIImageView *iconView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+    NSURL *imageURL = [self.imageBaseURL URLByAppendingPathComponent:iconId];
+    [iconView setImageWithURL:imageURL];
+    return iconView;
 }
 
 @end

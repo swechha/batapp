@@ -15,5 +15,6 @@
 - (void)weatherAtLocation:(CLLocation*)location success:(void (^)(NSDictionary* result))success faliure:(void (^)(NSError *error))failure;
 - (void)weatherIconWithId:(NSString *)iconId success:(void (^)(UIImage* icon))sucess failure:(void (^)(NSError* error))failure;
 - (void)forecastAtLocation:(CLLocation*)location success:(void (^)(NSDictionary* result))success faliure:(void (^)(NSError *error))failure;
+- (UIImageView *)weatherIconWithId:(NSString *)iconId;
 
 @end

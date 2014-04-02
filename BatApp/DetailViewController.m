@@ -11,6 +11,7 @@
 #import "ForecastWeatherViewCell.h"
 #import "WeatherKit.h"
 #import "ForecastWeather.h"
+#import "ForecastCityNameCell.h"
 
 @interface DetailViewController ()
 @property LFGlassView *glassView;
@@ -60,6 +61,7 @@
     [self makeRequestForForecast];
     
     [self.collectionView registerClass:[ForecastWeatherViewCell class] forCellWithReuseIdentifier:@"ForecastCell"];
+    [self.collectionView registerClass:[ForecastCityNameCell class] forCellWithReuseIdentifier:@"ForecastCityNameCell"];
     
     UIImageView *backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
     
@@ -92,7 +94,7 @@
 //Dismiss the detail view on the press of cancel button
 - (void)cancelButtonPressed
 {
-    [self dismissViewControllerAnimated:NO completion:^{}];
+    [self.navigationController popViewControllerAnimated:NO];
 }
 
 - (void)didReceiveMemoryWarning
@@ -105,14 +107,20 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return [self.forecastList count];
+    return (1+[self.forecastList count]);
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    ForecastWeatherViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"ForecastCell" forIndexPath:indexPath];
-    cell.forecastWeather = self.forecastList[indexPath.row];
-    return cell;
+    if (indexPath.row == 0) {
+        ForecastCityNameCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"ForecastCityNameCell" forIndexPath:indexPath];
+        cell.cityName = self.cityName;
+        return cell;
+    } else {
+        ForecastWeatherViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"ForecastCell" forIndexPath:indexPath];
+        cell.forecastWeather = self.forecastList[indexPath.row-1];
+        return cell;
+    }
 }
 
 #pragma mark - UICollectionViewDelegate methods

@@ -10,7 +10,7 @@
 
 @interface Weather : NSObject
 
-@property NSString *cityName;
+@property (nonatomic, copy) NSString *cityName;
 @property CGFloat latitude;
 @property CGFloat longitude;
 //Temperature unit - Kelvin
@@ -22,9 +22,10 @@
 //Humidity in %
 @property NSInteger humidity;
 //Overall weather description
-@property NSString *weatherDescription;
+@property (nonatomic, copy) NSString *weatherDescription;
 //Icon ID for the current weather
-@property NSString *iconID;
+@property (nonatomic, copy) NSString *iconID;
+@property UIImage *icon;
 
 - (instancetype)initWithDictionary:(NSDictionary*)response;
 

@@ -10,10 +10,10 @@
 
 @interface ForecastWeather : NSObject
 
-@property CGFloat maxTemp;
-@property CGFloat minTemp;
-@property NSString *date;
-@property NSString *weatherDescription;
+@property NSInteger maxTemp;
+@property NSInteger minTemp;
+@property (nonatomic, copy) NSString *dateString;
+@property (nonatomic, copy) NSString *weatherDescription;
 
 - (instancetype)initWithDictionary: (NSDictionary *)dictionary;
 

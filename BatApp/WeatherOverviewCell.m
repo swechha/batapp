@@ -20,6 +20,11 @@
     return self;
 }
 
+- (void)prepareForReuse
+{
+    
+}
+
 - (void)setWeatherObject:(Weather *)weatherObject
 {
     _weatherObject = weatherObject;
@@ -59,13 +64,9 @@
     temperatureLabel.text = [NSString stringWithFormat:@"%ld °C",(long)self.weatherObject.temperature];
     
     //Weather icon
-    [[WeatherKit sharedInstance] weatherIconWithId:weatherObject.iconID success:^(UIImage *icon) {
-        UIImageView *weatherIconView = [[UIImageView alloc] initWithImage:icon];
-        weatherIconView.center = CGPointMake(3*self.contentView.frame.size.width/4, 205);
-        [self.contentView addSubview:weatherIconView];
-    } failure:^(NSError *error) {
-        NSLog(@"Failed to get the icon");
-    }];
+    UIImageView *iconView = [[WeatherKit sharedInstance] weatherIconWithId:self.weatherObject.iconID];
+    iconView.center = CGPointMake(3*self.contentView.frame.size.width/4, 205);
+    [self.contentView addSubview:iconView];
     
     //Adding subviews
     [self.contentView addSubview:cityLabel];

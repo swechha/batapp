@@ -10,5 +10,6 @@
 #import <CoreLocation/CoreLocation.h>
 
 @interface DetailViewController : UICollectionViewController <UICollectionViewDataSource, UICollectionViewDelegate>
+@property (nonatomic, copy) NSString *cityName;
 - (id)initWithLocation:(CLLocation *)location;
 @end
