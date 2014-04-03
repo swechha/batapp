@@ -36,7 +36,7 @@
     cityLabel.text = self.weatherObject.cityName;
     
     //Humidity Label
-    UILabel *humidityLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 60, self.contentView.frame.size.width, 20)];
+    UILabel *humidityLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 60, self.contentView.frame.size.width-40, 20)];
     humidityLabel.font = [UIFont fontWithName:@"Avenir" size:18];
     humidityLabel.textColor = [UIColor whiteColor];
     humidityLabel.text = [NSString stringWithFormat:@"%ld %% Humidity", weatherObject.humidity];
@@ -67,6 +67,16 @@
     UIImageView *iconView = [[WeatherKit sharedInstance] weatherIconWithId:self.weatherObject.iconID];
     iconView.center = CGPointMake(3*self.contentView.frame.size.width/4, 205);
     [self.contentView addSubview:iconView];
+    
+    //Icon for current location
+    if (self.weatherObject.isCurrentLocation) {
+        UIImage *isCurrentLocation = [UIImage imageNamed:@"location"];
+        isCurrentLocation = [isCurrentLocation imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        UIImageView *currentLocationView = [[UIImageView alloc] initWithImage:isCurrentLocation];
+        [currentLocationView setTintColor:[UIColor whiteColor]];
+        currentLocationView.center = CGPointMake(self.contentView.frame.size.width-20, 30);
+        [self.contentView addSubview:currentLocationView];
+    }
     
     //Adding subviews
     [self.contentView addSubview:cityLabel];

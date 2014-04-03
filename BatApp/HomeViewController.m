@@ -59,26 +59,6 @@
     _glassView.liveBlurring = YES;
     [backgroundView addSubview:self.glassView];
     
-    
-    //HARDCODED STUFF -- NEED TO REMOVE IT
-    //ALSO USE WEAK SELF WHEN YOU REWRITE THIS CODE FOR "+" BUTTON
-    //__________________________________________________________________________________________
-    [[WeatherKit sharedInstance] weatherAtLocation:[[CLLocation alloc] initWithLatitude:35 longitude:139] success:^(NSDictionary *result) {
-        Weather *weather = [[Weather alloc] initWithDictionary:result];
-        [self.weatherData addObject:weather];
-        [self.collectionView reloadData];
-    } faliure:^(NSError *error) {
-        NSLog(@"Whaaaaaaaa");
-    }];
-    [[WeatherKit sharedInstance] weatherAtLocation:[[CLLocation alloc] initWithLatitude:50 longitude:28] success:^(NSDictionary *result) {
-        Weather *weather = [[Weather alloc] initWithDictionary:result];
-        [self.weatherData addObject:weather];
-        [self.collectionView reloadData];
-    } faliure:^(NSError *error) {
-        NSLog(@"Whaaaaaaaa");
-    }];
-    //___________________________________________________________________________________________
-    
     [self addTopButtons];
     
     //start updating location

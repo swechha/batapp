@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "HomeViewController.h"
 
-@interface SearchViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate>
+@interface SearchViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 - (id)initWithParentController:(HomeViewController *)parentController;
 @end
