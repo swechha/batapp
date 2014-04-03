@@ -41,7 +41,7 @@
     [self.contentView addSubview:self.minTempLabel];
 }
 
--(UILabel *)dateLabel
+- (UILabel *)dateLabel
 {
     if (!_dateLabel) {
         _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, self.contentView.frame.size.width/2, 30)];
@@ -52,7 +52,7 @@
 }
 
 
--(UILabel *)descriptionLabel
+- (UILabel *)descriptionLabel
 {
     if (!_descriptionLabel) {
         _descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, self.contentView.frame.size.height/2, self.contentView.frame.size.width/2, 30)];
@@ -62,7 +62,7 @@
     return _descriptionLabel;
 }
 
--(UILabel *)maxTempLabel
+- (UILabel *)maxTempLabel
 {
     if (!_maxTempLabel) {
         _maxTempLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.contentView.frame.size.width/2 + 10, 10, self.contentView.frame.size.width/2, 30)];
@@ -72,7 +72,7 @@
     return _maxTempLabel;
 }
 
--(UILabel *)minTempLabel
+- (UILabel *)minTempLabel
 {
     if (!_minTempLabel) {
         _minTempLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.contentView.frame.size.width/2 + 10, self.contentView.frame.size.height/2, self.contentView.frame.size.width/2, 30)];

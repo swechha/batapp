@@ -11,4 +11,6 @@
 
 @interface HomeViewController : UICollectionViewController <CLLocationManagerDelegate>
 
+- (void)addNewCityFromDicionary:(NSDictionary *)dictionary;
+
 @end

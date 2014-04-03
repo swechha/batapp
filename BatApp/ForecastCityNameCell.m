@@ -35,7 +35,7 @@
     [self.contentView addSubview:self.cityNameLabel];
 }
 
--(UILabel *)forecastLabel
+- (UILabel *)forecastLabel
 {
     if (!_forecastLabel) {
         _forecastLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, self.contentView.frame.size.width-20, 40)];
@@ -45,7 +45,7 @@
     return _forecastLabel;
 }
 
--(UILabel *)cityNameLabel
+- (UILabel *)cityNameLabel
 {
     if (!_cityNameLabel) {
         _cityNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 60, self.contentView.frame.size.width-20, 22)];

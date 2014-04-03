@@ -11,6 +11,7 @@
 #import "Weather.h"
 #import "WeatherKit.h"
 #import "DetailViewController.h"
+#import "SearchViewController.h"
 #import <LiveFrost.h>
 
 @interface HomeViewController ()
@@ -93,7 +94,7 @@
     [self.addButton.titleLabel setFont:[UIFont fontWithName:@"Avenir" size:30]];
     [self.addButton setTitle:@"+" forState:UIControlStateNormal];
     self.addButton.center = CGPointMake(25, 25);
-    [self.addButton targetForAction:@selector(addNewCity) withSender:self];
+    [self.addButton addTarget:self action:@selector(addButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
     [self.collectionView addSubview:self.addButton];
 }
@@ -104,9 +105,17 @@
 }
 
 //Called on clicking on + button
-- (void)addNewCity
+- (void)addButtonClicked
 {
-    
+    SearchViewController *searchViewController = [[SearchViewController alloc]initWithParentController:self];
+    [self.navigationController pushViewController:searchViewController animated:YES];
+}
+
+- (void)addNewCityFromDicionary:(NSDictionary *)dictionary
+{
+    Weather *weather = [[Weather alloc] initWithDictionary:dictionary];
+    [self.weatherData addObject:weather];
+    [self.collectionView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
