@@ -8,6 +8,11 @@
 
 #import "ForecastCityNameCell.h"
 
+@interface ForecastCityNameCell()
+@property (nonatomic, strong) UILabel *forecastLabel;
+@property (nonatomic, strong) UILabel *cityNameLabel;
+@end
+
 @implementation ForecastCityNameCell
 
 - (id)initWithFrame:(CGRect)frame
@@ -23,28 +28,31 @@
 {
     _cityName = cityName;
     
-    UILabel *forecastLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, self.contentView.frame.size.width-20, 40)];
-    UILabel *cityNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 60, self.contentView.frame.size.width-20, 22)];
+    self.forecastLabel.text = @"Forecast";
+    self.cityNameLabel.text = cityName;
     
-    forecastLabel.textColor = [UIColor whiteColor];
-    forecastLabel.font = [UIFont fontWithName:@"Avenir" size:38];
-    forecastLabel.text = @"Forecast";
-    
-    cityNameLabel.textColor = [UIColor whiteColor];
-    cityNameLabel.font = [UIFont fontWithName:@"Avenir" size:20];
-    cityNameLabel.text = cityName;
-    
-    [self.contentView addSubview:forecastLabel];
-    [self.contentView addSubview:cityNameLabel];
+    [self.contentView addSubview:self.forecastLabel];
+    [self.contentView addSubview:self.cityNameLabel];
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+-(UILabel *)forecastLabel
 {
-    // Drawing code
+    if (!_forecastLabel) {
+        _forecastLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, self.contentView.frame.size.width-20, 40)];
+        _forecastLabel.textColor = [UIColor whiteColor];
+        _forecastLabel.font = [UIFont fontWithName:@"Avenir" size:38];
+    }
+    return _forecastLabel;
 }
-*/
+
+-(UILabel *)cityNameLabel
+{
+    if (!_cityNameLabel) {
+        _cityNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 60, self.contentView.frame.size.width-20, 22)];
+        _cityNameLabel.textColor = [UIColor whiteColor];
+        _cityNameLabel.font = [UIFont fontWithName:@"Avenir" size:20];
+    }
+    return _cityNameLabel;
+}
 
 @end

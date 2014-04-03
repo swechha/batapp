@@ -153,10 +153,7 @@
 				BF6B16B618E571C60063E9D5 /* WeatherOverviewCell.m */,
 				BF49DD6318E9D6E700BC8A84 /* DetailViewController.h */,
 				BF49DD6418E9D6E700BC8A84 /* DetailViewController.m */,
-				BF28AC9F18EB245F000EE9B3 /* ForecastWeatherViewCell.h */,
-				BF28ACA018EB245F000EE9B3 /* ForecastWeatherViewCell.m */,
-				BFC55C7A18EC5B4100FAC267 /* ForecastCityNameCell.h */,
-				BFC55C7B18EC5B4100FAC267 /* ForecastCityNameCell.m */,
+				BFC55C7D18ED951C00FAC267 /* Views */,
 				BF75EF2B18E6F9CD00F703DB /* WeatherKit.h */,
 				BF75EF2C18E6F9CD00F703DB /* WeatherKit.m */,
 				BF0A724018E3495600853711 /* Images.xcassets */,
@@ -205,6 +202,17 @@
 				BF28ACA318EB2C1F000EE9B3 /* ForecastWeather.m */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		BFC55C7D18ED951C00FAC267 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BF28AC9F18EB245F000EE9B3 /* ForecastWeatherViewCell.h */,
+				BF28ACA018EB245F000EE9B3 /* ForecastWeatherViewCell.m */,
+				BFC55C7A18EC5B4100FAC267 /* ForecastCityNameCell.h */,
+				BFC55C7B18EC5B4100FAC267 /* ForecastCityNameCell.m */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 		BFD91DA518E46EEF00896207 /* Images */ = {

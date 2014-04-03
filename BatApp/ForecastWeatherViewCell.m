@@ -9,7 +9,10 @@
 #import "ForecastWeatherViewCell.h"
 
 @interface ForecastWeatherViewCell()
-
+@property (nonatomic, strong) UILabel *dateLabel;
+@property (nonatomic, strong) UILabel *descriptionLabel;
+@property (nonatomic, strong) UILabel *maxTempLabel;
+@property (nonatomic, strong) UILabel *minTempLabel;
 @end
 
 @implementation ForecastWeatherViewCell
@@ -27,44 +30,56 @@
 {
     _forecastWeather = forecastWeather;
     
-    //Label for date (Top Left)
-    UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, self.contentView.frame.size.width/2, 30)];
-    dateLabel.text = self.forecastWeather.dateString;
-    dateLabel.textColor = [UIColor whiteColor];
-    dateLabel.font = [UIFont fontWithName:@"Avenir" size:20];
+    self.dateLabel.text = self.forecastWeather.dateString;
+    self.descriptionLabel.text = self.forecastWeather.weatherDescription;
+    self.maxTempLabel.text = [NSString stringWithFormat:@"Max: %ld °C",self.forecastWeather.maxTemp];
+    self.minTempLabel.text = [NSString stringWithFormat:@"Min: %ld °C",self.forecastWeather.minTemp];
     
-    //Label for weather decription (Bottom Left)
-    UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, self.contentView.frame.size.height/2, self.contentView.frame.size.width/2, 30)];
-    descriptionLabel.text = self.forecastWeather.weatherDescription;
-    descriptionLabel.textColor = [UIColor whiteColor];
-    descriptionLabel.font = [UIFont fontWithName:@"Avenir" size:20];
-    
-    //Minimum tempertaure label (Top Right)
-    UILabel *maxTempLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.contentView.frame.size.width/2 + 10, 10, self.contentView.frame.size.width/2, 30)];
-    maxTempLabel.text = [NSString stringWithFormat:@"Max: %ld °C",self.forecastWeather.maxTemp];
-    maxTempLabel.textColor = [UIColor whiteColor];
-    maxTempLabel.font = [UIFont fontWithName:@"Avenir" size:20];
-    
-    
-    //Maximum temperature label (Bottom Right)
-    UILabel *minTempLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.contentView.frame.size.width/2 + 10, self.contentView.frame.size.height/2, self.contentView.frame.size.width/2, 30)];
-    minTempLabel.text = [NSString stringWithFormat:@"Min: %ld °C",self.forecastWeather.minTemp];
-    minTempLabel.textColor = [UIColor whiteColor];
-    minTempLabel.font = [UIFont fontWithName:@"Avenir" size:20];
-    
-    [self.contentView addSubview:dateLabel];
-    [self.contentView addSubview:descriptionLabel];
-    [self.contentView addSubview:maxTempLabel];
-    [self.contentView addSubview:minTempLabel];
+    [self.contentView addSubview:self.dateLabel];
+    [self.contentView addSubview:self.descriptionLabel];
+    [self.contentView addSubview:self.maxTempLabel];
+    [self.contentView addSubview:self.minTempLabel];
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+-(UILabel *)dateLabel
 {
-    // Drawing code
+    if (!_dateLabel) {
+        _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, self.contentView.frame.size.width/2, 30)];
+        _dateLabel.textColor = [UIColor whiteColor];
+        _dateLabel.font = [UIFont fontWithName:@"Avenir" size:20];
+    }
+    return _dateLabel;
 }
-*/
+
+
+-(UILabel *)descriptionLabel
+{
+    if (!_descriptionLabel) {
+        _descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, self.contentView.frame.size.height/2, self.contentView.frame.size.width/2, 30)];
+        _descriptionLabel.textColor = [UIColor whiteColor];
+        _descriptionLabel.font = [UIFont fontWithName:@"Avenir" size:20];
+    }
+    return _descriptionLabel;
+}
+
+-(UILabel *)maxTempLabel
+{
+    if (!_maxTempLabel) {
+        _maxTempLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.contentView.frame.size.width/2 + 10, 10, self.contentView.frame.size.width/2, 30)];
+        _maxTempLabel.textColor = [UIColor whiteColor];
+        _maxTempLabel.font = [UIFont fontWithName:@"Avenir" size:20];
+    }
+    return _maxTempLabel;
+}
+
+-(UILabel *)minTempLabel
+{
+    if (!_minTempLabel) {
+        _minTempLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.contentView.frame.size.width/2 + 10, self.contentView.frame.size.height/2, self.contentView.frame.size.width/2, 30)];
+        _minTempLabel.textColor = [UIColor whiteColor];
+        _minTempLabel.font = [UIFont fontWithName:@"Avenir" size:20];
+    }
+    return _minTempLabel;
+}
 
 @end
