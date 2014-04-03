@@ -62,13 +62,16 @@
 
 - (void)weatherIconWithId:(NSString *)iconId success:(void (^)(UIImage* icon))sucess failure:(void (^)(NSError* error))failure
 {
-    NSURL *imageURL = [self.imageBaseURL URLByAppendingPathComponent:iconId];
-    UIImage *iconImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageURL]];
-    if (iconImage) {
-        sucess(iconImage);
-    } else {
-        failure([NSError errorWithDomain:@"Faield to fetch the image" code:-1 userInfo:nil]);
+    if (iconId) {
+        NSURL *imageURL = [self.imageBaseURL URLByAppendingPathComponent:iconId];
+        UIImage *iconImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageURL]];
+        if (iconImage) {
+            sucess(iconImage);
+        } else {
+            failure([NSError errorWithDomain:@"Faield to fetch the image" code:-1 userInfo:nil]);
+        }
     }
+    failure([NSError errorWithDomain:@"Icon ID is nil" code:-1 userInfo:nil]);
 }
 
 //Returns image view with the weather icon

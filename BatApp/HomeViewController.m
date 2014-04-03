@@ -14,6 +14,7 @@
 #import <LiveFrost.h>
 
 @interface HomeViewController ()
+@property (nonatomic, strong) CLLocationManager *locationManager;
 @property LFGlassView *glassView;
 @property UIButton *addButton;
 @property UIButton *settingsButton;
@@ -30,8 +31,7 @@
     
     self = [super initWithCollectionViewLayout:flowLayout];
     if (self) {
-        [self startUpdatingCurrentLocation];
-        //initialize weatherData with current location
+        self.weatherData = [[NSMutableArray alloc] init];
     }
     
     return self;
@@ -40,6 +40,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //Initialize location manager
+    _locationManager = [[CLLocationManager alloc] init];
+    self.locationManager.delegate = self;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
+    self.locationManager.distanceFilter = kCLDistanceFilterNone;
+    
     [self.collectionView registerClass:[WeatherOverviewCell class] forCellWithReuseIdentifier:@"WeatherCell"];
     
     UIImageView *backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
@@ -57,7 +64,7 @@
     //__________________________________________________________________________________________
     [[WeatherKit sharedInstance] weatherAtLocation:[[CLLocation alloc] initWithLatitude:35 longitude:139] success:^(NSDictionary *result) {
         Weather *weather = [[Weather alloc] initWithDictionary:result];
-        self.weatherData = [[NSMutableArray alloc]initWithObjects:weather, nil];
+        [self.weatherData addObject:weather];
         [self.collectionView reloadData];
     } faliure:^(NSError *error) {
         NSLog(@"Whaaaaaaaa");
@@ -72,6 +79,9 @@
     //___________________________________________________________________________________________
     
     [self addTopButtons];
+    
+    //start updating location
+    [self startUpdatingCurrentLocation];
 }
 
 
@@ -90,12 +100,7 @@
 
 - (void)startUpdatingCurrentLocation
 {
-    CLLocationManager *locationManager = [[CLLocationManager alloc] init];
-    locationManager.delegate = self;
-    locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
-    locationManager.distanceFilter = kCLDistanceFilterNone;
-    
-    [locationManager startUpdatingLocation];
+    [self.locationManager startUpdatingLocation];
 }
 
 //Called on clicking on + button
@@ -113,7 +118,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    Weather *selectedWeather = [self.weatherData objectAtIndex:indexPath.row];
+    Weather *selectedWeather = self.weatherData[indexPath.row];
     //Create and push detailViewController
     CLLocation *thisLocation = [[CLLocation alloc] initWithLatitude:selectedWeather.latitude longitude:selectedWeather.longitude];
     DetailViewController *detailViewController = [[DetailViewController alloc] initWithLocation:thisLocation];
@@ -138,7 +143,7 @@
 - (UICollectionViewCell*)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     WeatherOverviewCell *weatherCell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"WeatherCell" forIndexPath:indexPath];
-    weatherCell.weatherObject = [self.weatherData objectAtIndex:indexPath.row];
+    weatherCell.weatherObject = self.weatherData[indexPath.row];
     return weatherCell;
 }
 
@@ -147,23 +152,25 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     CLLocation *currentLocation = [locations lastObject];
-    if (!_weatherData) {
-        [[WeatherKit sharedInstance] weatherAtLocation:currentLocation success:^(NSDictionary *result) {
-            Weather *weather = [[Weather alloc] initWithDictionary:result];
-            self.weatherData = [[NSMutableArray alloc]initWithObjects:weather, nil];
-            [self.collectionView reloadData];
-        } faliure:^(NSError *error) {
-            NSLog(@"Whaaaaaaaa");
-        }];
-    } else {
-        [[WeatherKit sharedInstance] weatherAtLocation:[[CLLocation alloc] initWithLatitude:35 longitude:139] success:^(NSDictionary *result) {
-            Weather *weather = [[Weather alloc] initWithDictionary:result];
+    
+    [[WeatherKit sharedInstance] weatherAtLocation:currentLocation success:^(NSDictionary *result)
+    {
+        Weather *weather = [[Weather alloc] initWithDictionary:result];
+        weather.isCurrentLocation = YES;
+        if ([self.weatherData count] != 0) {
+            if ([self.weatherData[0] isCurrentLocation] == YES) {
+                self.weatherData[0] = weather;
+            } else {
+                [self.weatherData insertObject:weather atIndex:0];
+            }
+        } else {
             self.weatherData[0] = weather;
-            [self.collectionView reloadData];
-        } faliure:^(NSError *error) {
-            NSLog(@"Whaaaaaaaa");
-        }];
-    }
+        }
+            
+        [self.collectionView reloadData];
+    } faliure:^(NSError *error) {
+        NSLog(@"Couldn't get the weather at current location");
+    }];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error

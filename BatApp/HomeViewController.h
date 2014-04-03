@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 
-@interface HomeViewController : UICollectionViewController <UICollectionViewDelegate, UICollectionViewDataSource, CLLocationManagerDelegate>
+@interface HomeViewController : UICollectionViewController <CLLocationManagerDelegate>
 
 @end

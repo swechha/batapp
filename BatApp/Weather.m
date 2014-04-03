@@ -30,6 +30,7 @@
 - (instancetype)initWithDictionary:(NSDictionary*)response
 {
     if (self = [super init]) {
+        _isCurrentLocation = NO;
         _latitude = [response[@"coord"][@"lat"] floatValue];
         _longitude = [response[@"coord"][@"long"] floatValue];
         _temperature = roundf([response[@"main"][@"temp"] floatValue]);

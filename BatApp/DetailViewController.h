@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 
-@interface DetailViewController : UICollectionViewController <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface DetailViewController : UICollectionViewController
 @property (nonatomic, copy) NSString *cityName;
 - (id)initWithLocation:(CLLocation *)location;
 @end

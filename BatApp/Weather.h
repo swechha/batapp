@@ -10,6 +10,7 @@
 
 @interface Weather : NSObject
 
+@property BOOL isCurrentLocation;
 @property (nonatomic, copy) NSString *cityName;
 @property CGFloat latitude;
 @property CGFloat longitude;
