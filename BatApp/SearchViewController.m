@@ -46,7 +46,7 @@
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 90, self.view.frame.size.width-20, self.view.frame.size.height-60) style:UITableViewStylePlain];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"SearchCell"];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    [self.tableView setBackgroundColor:[UIColor colorWithWhite:1.0 alpha:0.2]];
+    [self.tableView setBackgroundColor:[UIColor colorWithWhite:1.0 alpha:1.0]];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
