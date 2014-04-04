@@ -34,11 +34,6 @@
     self.descriptionLabel.text = self.forecastWeather.weatherDescription;
     self.maxTempLabel.text = [NSString stringWithFormat:@"Max: %ld °C",self.forecastWeather.maxTemp];
     self.minTempLabel.text = [NSString stringWithFormat:@"Min: %ld °C",self.forecastWeather.minTemp];
-    
-    [self.contentView addSubview:self.dateLabel];
-    [self.contentView addSubview:self.descriptionLabel];
-    [self.contentView addSubview:self.maxTempLabel];
-    [self.contentView addSubview:self.minTempLabel];
 }
 
 - (UILabel *)dateLabel
@@ -47,6 +42,7 @@
         _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, self.contentView.frame.size.width/2, 30)];
         _dateLabel.textColor = [UIColor whiteColor];
         _dateLabel.font = [UIFont fontWithName:@"Avenir" size:20];
+        [self.contentView addSubview:_dateLabel];
     }
     return _dateLabel;
 }
@@ -58,6 +54,7 @@
         _descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, self.contentView.frame.size.height/2, self.contentView.frame.size.width/2, 30)];
         _descriptionLabel.textColor = [UIColor whiteColor];
         _descriptionLabel.font = [UIFont fontWithName:@"Avenir" size:20];
+        [self.contentView addSubview:_descriptionLabel];
     }
     return _descriptionLabel;
 }
@@ -68,6 +65,7 @@
         _maxTempLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.contentView.frame.size.width/2 + 10, 10, self.contentView.frame.size.width/2, 30)];
         _maxTempLabel.textColor = [UIColor whiteColor];
         _maxTempLabel.font = [UIFont fontWithName:@"Avenir" size:20];
+        [self.contentView addSubview:_maxTempLabel];
     }
     return _maxTempLabel;
 }
@@ -78,6 +76,7 @@
         _minTempLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.contentView.frame.size.width/2 + 10, self.contentView.frame.size.height/2, self.contentView.frame.size.width/2, 30)];
         _minTempLabel.textColor = [UIColor whiteColor];
         _minTempLabel.font = [UIFont fontWithName:@"Avenir" size:20];
+        [self.contentView addSubview:_minTempLabel];
     }
     return _minTempLabel;
 }
