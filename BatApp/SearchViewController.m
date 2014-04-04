@@ -66,7 +66,7 @@
 {
     __weak SearchViewController *weakSelf = self;
     [self.searchResults removeAllObjects];
-    NSString *searchString = self.searchBar.text;
+    NSString *searchString = [self.searchBar.text stringByAddingPercentEscapesUsingEncoding:NSStringEncodingConversionAllowLossy];
     NSURL *requestURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@?q=%@&units=metric&mode=json&APPID=%@",self.baseURL,searchString,self.appID]];
     NSURLRequest *searchRequest = [NSURLRequest requestWithURL:requestURL];
     

@@ -130,7 +130,7 @@
     CLLocation *thisLocation = [[CLLocation alloc] initWithLatitude:selectedWeather.latitude longitude:selectedWeather.longitude];
     DetailViewController *detailViewController = [[DetailViewController alloc] initWithLocation:thisLocation];
     detailViewController.cityName = selectedWeather.cityName;
-    [self.navigationController pushViewController:detailViewController animated:NO];
+    [self.navigationController pushViewController:detailViewController animated:YES];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath

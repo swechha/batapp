@@ -95,7 +95,7 @@
 //Dismiss the detail view on the press of cancel button
 - (void)cancelButtonPressed
 {
-    [self.navigationController popViewControllerAnimated:NO];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning
