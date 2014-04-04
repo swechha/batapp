@@ -54,17 +54,36 @@
     [self.collectionView setBackgroundView:backgroundView];
     
     //Adding blur to the background
-    _glassView = [[LFGlassView alloc] initWithFrame:backgroundView.bounds];
-    _glassView.blurRadius = 0.8;
-    _glassView.liveBlurring = YES;
+    self.glassView = [[LFGlassView alloc] initWithFrame:backgroundView.bounds];
+    self.glassView.blurRadius = 0.8;
+    self.glassView.liveBlurring = YES;
     [backgroundView addSubview:self.glassView];
+    [self.glassView performSelector:@selector(setLiveBlurring:) withObject:@NO afterDelay:0.25];
     
     [self addTopButtons];
+    [self addDefaultCities];
     
     //start updating location
     [self startUpdatingCurrentLocation];
 }
 
+- (void)addDefaultCities
+{
+    [[WeatherKit sharedInstance] weatherAtLocation:[[CLLocation alloc] initWithLatitude:39.9139 longitude:116.3917] success:^(NSDictionary *result) {
+        Weather *weather = [[Weather alloc] initWithDictionary:result];
+        [self.weatherData addObject:weather];
+        [self.collectionView reloadData];
+    } faliure:^(NSError *error) {
+        NSLog(@"Failed to get location!");
+    }];
+    [[WeatherKit sharedInstance] weatherAtLocation:[[CLLocation alloc] initWithLatitude:18.9750 longitude:72.8258] success:^(NSDictionary *result) {
+        Weather *weather = [[Weather alloc] initWithDictionary:result];
+        [self.weatherData addObject:weather];
+        [self.collectionView reloadData];
+    } faliure:^(NSError *error) {
+        NSLog(@"Failed to get location!");
+    }];
+}
 
 //For adding "+" and "settings" icon on top of the collection view
 //Size of button: 30x30, center of button: (25,25), Font size: 30
@@ -108,11 +127,9 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     Weather *selectedWeather = self.weatherData[indexPath.row];
-    //Create and push detailViewController
     CLLocation *thisLocation = [[CLLocation alloc] initWithLatitude:selectedWeather.latitude longitude:selectedWeather.longitude];
     DetailViewController *detailViewController = [[DetailViewController alloc] initWithLocation:thisLocation];
     detailViewController.cityName = selectedWeather.cityName;
-    
     [self.navigationController pushViewController:detailViewController animated:NO];
 }
 
@@ -164,8 +181,7 @@
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
-    NSLog(@"Location Manager failed");
-    //Display a message for "Cannot get the current location
+    NSLog(@"Location Manager failed with error: %@",error);
 }
 
 @end

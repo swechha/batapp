@@ -66,10 +66,11 @@
     UIImageView *backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
     
     //Adding blur to the background
-    _glassView = [[LFGlassView alloc] initWithFrame:self.view.frame];
-    _glassView.blurRadius = 0.8;
-    _glassView.liveBlurring = YES;
+    self.glassView = [[LFGlassView alloc] initWithFrame:self.view.frame];
+    self.glassView.blurRadius = 0.8;
+    self.glassView.liveBlurring = YES;
     [backgroundView addSubview:self.glassView];
+    [self.glassView performSelector:@selector(setLiveBlurring:) withObject:@NO afterDelay:0.25];
     
     [self.collectionView setBackgroundView:backgroundView];
     

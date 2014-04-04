@@ -111,8 +111,9 @@
 {
     static NSString *identifier = @"SearchCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if(cell == nil)
+    if(cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault     reuseIdentifier:identifier];
+    }
     cell.textLabel.font = [UIFont fontWithName:@"Avenir" size:20];
     cell.textLabel.text = self.searchResults[indexPath.row][@"name"];
     
