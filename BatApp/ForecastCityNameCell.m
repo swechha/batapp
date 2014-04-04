@@ -30,9 +30,6 @@
     
     self.forecastLabel.text = @"Forecast";
     self.cityNameLabel.text = cityName;
-    
-    [self.contentView addSubview:self.forecastLabel];
-    [self.contentView addSubview:self.cityNameLabel];
 }
 
 - (UILabel *)forecastLabel
@@ -41,6 +38,7 @@
         _forecastLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, self.contentView.frame.size.width-20, 40)];
         _forecastLabel.textColor = [UIColor whiteColor];
         _forecastLabel.font = [UIFont fontWithName:@"Avenir" size:38];
+        [self.contentView addSubview:_forecastLabel];
     }
     return _forecastLabel;
 }
@@ -51,6 +49,7 @@
         _cityNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 60, self.contentView.frame.size.width-20, 22)];
         _cityNameLabel.textColor = [UIColor whiteColor];
         _cityNameLabel.font = [UIFont fontWithName:@"Avenir" size:20];
+        [self.contentView addSubview:_cityNameLabel];
     }
     return _cityNameLabel;
 }
