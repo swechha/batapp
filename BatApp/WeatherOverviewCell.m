@@ -59,6 +59,7 @@
 - (void)prepareForReuse
 {
     [super prepareForReuse];
+    [_iconView removeFromSuperview];
     _iconView = nil;
     _currentLocationView.image = nil;
 }

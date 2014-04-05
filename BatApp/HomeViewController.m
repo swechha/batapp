@@ -69,10 +69,11 @@
 
 - (void)addDefaultCities
 {
+    __weak HomeViewController *weakSelf = self;
     [[WeatherKit sharedInstance] weatherAtLocation:[[CLLocation alloc] initWithLatitude:39.9139 longitude:116.3917] success:^(NSDictionary *result) {
         Weather *weather = [[Weather alloc] initWithDictionary:result];
-        [self.weatherData addObject:weather];
-        [self.collectionView reloadData];
+        [weakSelf.weatherData addObject:weather];
+        [weakSelf.collectionView reloadData];
     } faliure:^(NSError *error) {
         NSLog(@"Failed to get location!");
     }];
@@ -135,7 +136,6 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"%lf %lf",self.view.frame.size.width-20, (self.view.frame.size.height-80)/2);
     return CGSizeMake(300, 244);
 }
 
@@ -158,22 +158,22 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     CLLocation *currentLocation = [locations lastObject];
-    
+    __weak HomeViewController *weakSelf = self;
     [[WeatherKit sharedInstance] weatherAtLocation:currentLocation success:^(NSDictionary *result)
     {
         Weather *weather = [[Weather alloc] initWithDictionary:result];
         weather.isCurrentLocation = YES;
-        if ([self.weatherData count] != 0) {
-            if ([self.weatherData[0] isCurrentLocation] == YES) {
-                self.weatherData[0] = weather;
+        if ([weakSelf.weatherData count] != 0) {
+            if ([weakSelf.weatherData[0] isCurrentLocation] == YES) {
+                weakSelf.weatherData[0] = weather;
             } else {
-                [self.weatherData insertObject:weather atIndex:0];
+                [weakSelf.weatherData insertObject:weather atIndex:0];
             }
         } else {
-            self.weatherData[0] = weather;
+            weakSelf.weatherData[0] = weather;
         }
             
-        [self.collectionView reloadData];
+        [weakSelf.collectionView reloadData];
     } faliure:^(NSError *error) {
         NSLog(@"Couldn't get the weather at current location");
     }];
